@@ -6,6 +6,12 @@ May 2026
 
 ---
 
+<p align="center">
+  <img src="media/images/aegis_0000.jpeg" alt="AEGIS Robot" width="300"/>
+</p>
+
+---
+
 ## Abstract
 
 AEGIS is a ground robotics platform for autonomous perimeter patrol and on-device threat detection. The system runs entirely on embedded hardware with no cloud dependency, using a temporal verification layer to reduce false positives before any behavioral response is triggered. The primary research question is whether a low-cost, single-board-computer platform can sustain a reliable perception-to-action pipeline under real-world conditions with an acceptably low false positive rate.
