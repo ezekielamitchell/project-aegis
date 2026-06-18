@@ -1,5 +1,5 @@
 [package]
-name = "aegis-motor"
+name = "aegis-control"
 version = "0.1.0"
 edition = "2021"
 authors = ["Ezekiel A. Mitchell"]
@@ -7,7 +7,7 @@ description = "AEGIS motor control + safety layer (Rust, exposed to Python via P
 license = "MIT"
 
 [lib]
-name = "aegis_motor"
+name = "aegis_control"
 # cdylib: build a native Python extension module.
 crate-type = ["cdylib", "rlib"]
 

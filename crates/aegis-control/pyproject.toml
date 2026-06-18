@@ -3,7 +3,7 @@ requires = ["maturin>=1.5,<2.0"]
 build-backend = "maturin"
 
 [project]
-name = "aegis-motor"
+name = "aegis-control"
 version = "0.1.0"
 description = "AEGIS motor control + safety layer (Rust/PyO3)"
 authors = [{ name = "Ezekiel A. Mitchell" }]
@@ -12,5 +12,5 @@ license = { text = "MIT" }
 classifiers = ["Programming Language :: Rust"]
 
 [tool.maturin]
-# Build the abi3 extension module `aegis_motor`.
+# Build the abi3 extension module `aegis_control`.
 features = ["pyo3/extension-module"]

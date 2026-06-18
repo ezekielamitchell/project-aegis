@@ -26,3 +26,30 @@ data/session_*.json
 
 # OS
 .DS_Store
+
+# Claude Code (local, machine-specific — keep a shared settings.json if you add one)
+.claude/settings.local.json
+.claude/worktrees/
+.claude/projects/
+.claude/todos/
+.claude/shell-snapshots/
+.claude/statsig/
+CLAUDE.local.md
+
+# Secrets / credentials / environment
+.env
+.env.*
+!.env.example
+*.local.yaml
+*.local.yml
+secrets.*
+credentials.*
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+*.crt
+.netrc
+service-account*.json
+*-key.json

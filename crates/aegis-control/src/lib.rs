@@ -2,7 +2,7 @@
 //!
 //! This crate owns the safety-critical, real-time-sensitive part of AEGIS: the
 //! differential-drive motor driver and the emergency-stop path. It is compiled
-//! as a native Python extension (`aegis_motor`) via PyO3 and consumed by the
+//! as a native Python extension (`aegis_control`) via PyO3 and consumed by the
 //! Python `BehaviorPlanner`.
 //!
 //! SAFETY model (mirrors README "Safety"):
@@ -247,9 +247,9 @@ impl BehaviorPlanner {
     }
 }
 
-/// The Python module: `import aegis_motor`.
+/// The Python module: `import aegis_control`.
 #[pymodule]
-fn aegis_motor(m: &Bound<'_, PyModule>) -> PyResult<()> {
+fn aegis_control(m: &Bound<'_, PyModule>) -> PyResult<()> {
     m.add_class::<MotorDriver>()?;
     m.add_class::<BehaviorPlanner>()?;
     m.add("__version__", env!("CARGO_PKG_VERSION"))?;

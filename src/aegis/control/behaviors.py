@@ -1,7 +1,7 @@
-"""Behavior planner — Python binding to the Rust `aegis_motor` crate.
+"""Behavior planner — Python binding to the Rust `aegis_control` crate.
 
 Both the motion planning (state -> behavior -> wheel speeds) and the motor
-driver now live in Rust (crates/aegis-motor). `BehaviorPlanner` owns its
+driver now live in Rust (crates/aegis-control). `BehaviorPlanner` owns its
 `MotorDriver`, so the entire control loop stays in Rust; Python only feeds it
 the verified detection state and the target centroid.
 
@@ -22,12 +22,12 @@ from __future__ import annotations
 from enum import Enum
 
 try:
-    from aegis_motor import BehaviorPlanner  # native Rust extension
+    from aegis_control import BehaviorPlanner  # native Rust extension
 except ImportError as exc:  # pragma: no cover - depends on build step
     raise ImportError(
-        "The Rust motor extension `aegis_motor` is not built. Run:\n"
+        "The Rust motor extension `aegis_control` is not built. Run:\n"
         "    pip install maturin\n"
-        "    maturin develop -m crates/aegis-motor/Cargo.toml\n"
+        "    maturin develop -m crates/aegis-control/Cargo.toml\n"
         f"(original error: {exc})"
     ) from exc
 

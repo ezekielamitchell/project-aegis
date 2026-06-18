@@ -22,9 +22,9 @@ CameraSource ──frame──▶ Detector ──detections──▶ Tracker ─
 | Detector | `perception/detector.py` | YOLOv8n inference, threshold + class filter |
 | Tracker | `perception/tracker.py` | Select single best target per frame |
 | TemporalFilter | `verification/temporal_filter.py` | State machine; suppress false positives |
-| BehaviorPlanner | `crates/aegis-motor` (Rust) | State → behavior → wheel speeds; owns the MotorDriver |
-| MotorDriver | `crates/aegis-motor` (Rust) | Differential drive, safety gating, e-stop |
-| ↳ bindings | `control/behaviors.py`, `control/motor_driver.py` | Re-export the Rust `aegis_motor` PyO3 classes |
+| BehaviorPlanner | `crates/aegis-control` (Rust) | State → behavior → wheel speeds; owns the MotorDriver |
+| MotorDriver | `crates/aegis-control` (Rust) | Differential drive, safety gating, e-stop |
+| ↳ bindings | `control/behaviors.py`, `control/motor_driver.py` | Re-export the Rust `aegis_control` PyO3 classes |
 | SessionLogger | `telemetry/logger.py` | JSONL session logs |
 | MqttClient | `telemetry/mqtt_client.py` | Optional telemetry publishing |
 
@@ -37,8 +37,8 @@ before transitioning to `LOST`. See `verification/temporal_filter.py`.
 
 ## Safety model
 
-The motor driver and emergency-stop path live in the Rust `aegis-motor` crate
-(`crates/aegis-motor/src/lib.rs`), compiled to a native Python module via PyO3.
+The motor driver and emergency-stop path live in the Rust `aegis-control` crate
+(`crates/aegis-control/src/lib.rs`), compiled to a native Python module via PyO3.
 
 - Motors are disabled until `MotorDriver.enable()` is called.
 - GPIO output is gated behind both `simulation_mode == false` and the `hardware`

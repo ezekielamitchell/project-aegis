@@ -25,7 +25,7 @@ hardware = [
 ]
 dev = [
     "pytest>=7.0",
-    "maturin>=1.5",  # builds the Rust aegis-motor extension
+    "maturin>=1.5",  # builds the Rust aegis-control extension
 ]
 
 [project.scripts]

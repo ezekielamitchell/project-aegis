@@ -36,7 +36,7 @@ AEGIS is a ground robotics platform for autonomous perimeter patrol and on-devic
 |---|---|
 | OS | Ubuntu Server 24.04 LTS (64-bit) |
 | Language | Python 3.11+ (perception, verification) |
-| Control | Rust crate (`aegis-motor`): motion planning + motor driver, bound via PyO3 |
+| Control | Rust crate (`aegis-control`): motion planning + motor driver, bound via PyO3 |
 | Detection | YOLOv8n (Ultralytics) |
 | Vision | OpenCV |
 | Telemetry | MQTT (optional), local JSON logs |
@@ -44,7 +44,7 @@ AEGIS is a ground robotics platform for autonomous perimeter patrol and on-devic
 
 The entire control loop — behavior/motion planning, the differential-drive
 motor driver, and the emergency-stop path — is implemented in Rust
-(`crates/aegis-motor`) and compiled to a native Python extension with PyO3.
+(`crates/aegis-control`) and compiled to a native Python extension with PyO3.
 Python feeds the planner only the verified detection state and target centroid;
 all real-time-sensitive control stays out of Python. Perception and the
 temporal verification layer remain in Python.
@@ -107,7 +107,7 @@ project-aegis/
 │   ├── control/           # Python bindings to the Rust control crate
 │   └── telemetry/         # logger, mqtt client
 ├── crates/
-│   └── aegis-motor/       # Rust: behavior planner + motor driver + e-stop (PyO3)
+│   └── aegis-control/       # Rust: behavior planner + motor driver + e-stop (PyO3)
 ├── configs/
 │   └── default.yaml
 ├── tests/
@@ -147,9 +147,9 @@ into your environment, then run the tests:
 
 ```bash
 pip install -e ".[dev]"
-maturin develop -m crates/aegis-motor/Cargo.toml   # builds the aegis_motor module
+maturin develop -m crates/aegis-control/Cargo.toml   # builds the aegis_control module
 PYTHONPATH=src pytest                               # Python suite
-cargo test --manifest-path crates/aegis-motor/Cargo.toml   # Rust suite
+cargo test --manifest-path crates/aegis-control/Cargo.toml   # Rust suite
 ```
 
 > On macOS with a conda/non-framework Python, the `cargo test` runner needs to

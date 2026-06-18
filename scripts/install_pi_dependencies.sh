@@ -6,7 +6,7 @@ echo "[aegis] updating apt..."
 sudo apt-get update
 sudo apt-get install -y python3-pip python3-venv libgl1 libglib2.0-0
 
-# Rust toolchain — required to build the aegis-motor crate (motor + safety layer).
+# Rust toolchain — required to build the aegis-control crate (motor + safety layer).
 if ! command -v cargo >/dev/null 2>&1; then
     echo "[aegis] installing Rust toolchain..."
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
@@ -27,6 +27,6 @@ pip install --upgrade pip
 pip install -e ".[hardware,dev]"
 
 echo "[aegis] building Rust motor extension (with hardware GPIO feature)..."
-maturin develop --release -m crates/aegis-motor/Cargo.toml --features hardware
+maturin develop --release -m crates/aegis-control/Cargo.toml --features hardware
 
 echo "[aegis] done. Activate with: source .venv/bin/activate"
