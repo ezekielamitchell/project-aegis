@@ -1,0 +1,25 @@
+# AEGIS default configuration.
+# Keep simulation_mode: true until hardware is verified (see README "Safety").
+
+simulation_mode: true
+camera_index: 0
+target_class: person
+confidence_threshold: 0.55
+
+# Temporal verification layer
+required_consecutive_frames: 4
+max_missed_frames: 8
+max_centroid_drift: 0.15
+
+# Motor control
+motor_speed_default: 0.4
+
+# Telemetry
+telemetry_enabled: true
+log_dir: data
+mqtt_enabled: false
+mqtt_host: localhost
+mqtt_port: 1883
+mqtt_topic: aegis/telemetry
+
+debug: false

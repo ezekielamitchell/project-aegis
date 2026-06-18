@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aegis"
+version = "0.1.0"
+description = "Autonomous Edge Ground Intelligence System"
+authors = [{ name = "Ezekiel A. Mitchell" }]
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = [
+    "pyyaml>=6.0",
+    "numpy>=1.24",
+]
+
+[project.optional-dependencies]
+# Heavy / hardware-only deps. Install on the Pi or when running real inference.
+hardware = [
+    "opencv-python>=4.8",
+    "ultralytics>=8.0",
+    "RPi.GPIO>=0.7; platform_system == 'Linux'",
+    "paho-mqtt>=1.6",
+]
+dev = [
+    "pytest>=7.0",
+    "maturin>=1.5",  # builds the Rust aegis-motor extension
+]
+
+[project.scripts]
+aegis = "aegis.main:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

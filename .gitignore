@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+
+# Pytest / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Rust
+target/
+
+# Model weights
+*.pt
+*.onnx
+
+# Session logs (keep the data/ dir, ignore generated logs)
+data/*.jsonl
+data/session_*.json
+
+# OS
+.DS_Store

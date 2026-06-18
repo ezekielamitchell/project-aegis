@@ -1,0 +1,23 @@
+[package]
+name = "aegis-motor"
+version = "0.1.0"
+edition = "2021"
+authors = ["Ezekiel A. Mitchell"]
+description = "AEGIS motor control + safety layer (Rust, exposed to Python via PyO3)"
+license = "MIT"
+
+[lib]
+name = "aegis_motor"
+# cdylib: build a native Python extension module.
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+# `extension-module` is NOT enabled here on purpose — it omits libpython at
+# link time, which is correct for the built .so but breaks `cargo test`.
+# maturin enables it via [tool.maturin] features in pyproject.toml.
+pyo3 = { version = "0.22", features = ["abi3-py311"] }
+
+[features]
+# Enable on the Pi to compile real GPIO output. Off by default so the crate
+# builds and runs anywhere in simulation.
+hardware = []

@@ -35,11 +35,19 @@ AEGIS is a ground robotics platform for autonomous perimeter patrol and on-devic
 | Layer | Technology |
 |---|---|
 | OS | Ubuntu Server 24.04 LTS (64-bit) |
-| Language | Python 3.11+ |
+| Language | Python 3.11+ (perception, verification) |
+| Control | Rust crate (`aegis-motor`): motion planning + motor driver, bound via PyO3 |
 | Detection | YOLOv8n (Ultralytics) |
 | Vision | OpenCV |
 | Telemetry | MQTT (optional), local JSON logs |
-| Testing | pytest |
+| Testing | pytest, cargo test |
+
+The entire control loop — behavior/motion planning, the differential-drive
+motor driver, and the emergency-stop path — is implemented in Rust
+(`crates/aegis-motor`) and compiled to a native Python extension with PyO3.
+Python feeds the planner only the verified detection state and target centroid;
+all real-time-sensitive control stays out of Python. Perception and the
+temporal verification layer remain in Python.
 
 ---
 
@@ -93,10 +101,13 @@ project-aegis/
 ├── src/aegis/
 │   ├── main.py
 │   ├── config.py
+│   ├── types.py
 │   ├── perception/        # camera, detector, tracker
 │   ├── verification/      # temporal filter
-│   ├── control/           # motor driver, behaviors
+│   ├── control/           # Python bindings to the Rust control crate
 │   └── telemetry/         # logger, mqtt client
+├── crates/
+│   └── aegis-motor/       # Rust: behavior planner + motor driver + e-stop (PyO3)
 ├── configs/
 │   └── default.yaml
 ├── tests/
@@ -128,6 +139,22 @@ Edit `configs/default.yaml`. Set `simulation_mode: true` until hardware is verif
 ```bash
 bash scripts/run_aegis.sh
 ```
+
+### Local development (no Pi)
+
+The pipeline runs anywhere in simulation mode. Build the Rust motor extension
+into your environment, then run the tests:
+
+```bash
+pip install -e ".[dev]"
+maturin develop -m crates/aegis-motor/Cargo.toml   # builds the aegis_motor module
+PYTHONPATH=src pytest                               # Python suite
+cargo test --manifest-path crates/aegis-motor/Cargo.toml   # Rust suite
+```
+
+> On macOS with a conda/non-framework Python, the `cargo test` runner needs to
+> find libpython at runtime:
+> `DYLD_FALLBACK_LIBRARY_PATH="$(python -c 'import sysconfig;print(sysconfig.get_config_var("LIBDIR"))')" cargo test ...`
 
 ---
 

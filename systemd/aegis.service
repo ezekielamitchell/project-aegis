@@ -1,0 +1,18 @@
+[Unit]
+Description=AEGIS Autonomous Edge Ground Intelligence System
+After=network.target
+
+[Service]
+Type=simple
+# Adjust User and paths to match the deployment on the Pi.
+User=aegis
+WorkingDirectory=/opt/project-aegis
+ExecStart=/opt/project-aegis/scripts/run_aegis.sh
+Restart=on-failure
+RestartSec=5
+# Safety: send SIGTERM so main.py's signal handler triggers emergency_stop.
+KillSignal=SIGTERM
+TimeoutStopSec=10
+
+[Install]
+WantedBy=multi-user.target
